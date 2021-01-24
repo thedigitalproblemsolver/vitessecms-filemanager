@@ -14,7 +14,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "VitesseCms\\Export\\": "src/"
+      "VitesseCms\\Filemanager\\": "src/"
     }
   },
   "require": {

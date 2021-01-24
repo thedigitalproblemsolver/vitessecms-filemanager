@@ -1,0 +1,29 @@
+<div class="filemanager">
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <ol class="breadcrumbs breadcrumb"></ol>
+        </div>
+        <div class="col-12 col-lg-6">
+            <form class="form-inline float-md-right">
+                <div class="search input-group">
+                    <input id="search" type="search" class="form-control" placeholder="Find a file..">
+                    <span class="input-group-prepend">
+                        <button type="submit" class="fa fa-search btn btn-success"></button>
+                    </span>
+                    <span class="input-group-prepend upload">
+                        <input type="hidden" name="directory" id="directory"/>
+                        <input class="d-none" type="file" name="file" id="file"/>
+                        <a href="#" class="fa fa-cloud-upload btn btn-info" id="uploadButton"></a>
+                        <a href="{{BASE_URI}}admin/filemanager/admindirectory/createform" class="fa fa-plus btn btn-info" id="addDirectory"></a>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="data row card-deck"></div>
+    <div class="loading uil-rolling-css"><div><div></div><div></div></div></div>
+
+    {{#target}}
+        <span class="d-none" id="filemanager-target" >{{target}}</span>
+    {{/target}}
+</div>
