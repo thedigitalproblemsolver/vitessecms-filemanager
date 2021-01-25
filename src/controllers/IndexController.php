@@ -56,9 +56,9 @@ class IndexController extends AbstractController
                     $parent .= '/';
                 endif;
                 if ($file->moveTo($this->configuration->getUploadDir().$parent.$name)) :
-                    $this->flash->_('ADMIN_FILE_UPLOAD_SUCCESS', 'success', [$file->getName()]);
+                    $this->flash->setSucces('ADMIN_FILE_UPLOAD_SUCCESS', [$file->getName()]);
                 else :
-                    $this->flash->_('ADMIN_FILE_UPLOAD_FAILED', 'error', [$file->getName()]);
+                    $this->flash->setError('ADMIN_FILE_UPLOAD_FAILED', [$file->getName()]);
                 endif;
             endforeach;
         endif;
