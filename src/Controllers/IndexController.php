@@ -21,7 +21,7 @@ class IndexController extends AbstractController
 
         $this->view->set('content', $this->view->renderTemplate(
             'adminFilemanager',
-            $this->configuration->getVendorNameDir().'filemanager/src/resources/views/',
+            $this->configuration->getVendorNameDir().'filemanager/src/Resources/views/',
             ['target' => $target]
         ));
 
