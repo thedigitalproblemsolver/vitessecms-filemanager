@@ -11,8 +11,7 @@ class AddDirectoryForm extends AbstractForm
     {
         $this->addText('Directory', 'directoryname', (new Attributes())->setRequired())
             ->addHidden('parent', $parent)
-            ->addSubmitButton('%CORE_SAVE%')
-        ;
+            ->addSubmitButton('%CORE_SAVE%');
 
         return $this;
     }
