@@ -21,7 +21,7 @@ class IndexController extends AbstractController
 
         $this->view->set('content', $this->view->renderTemplate(
             'adminFilemanager',
-            $this->configuration->getVendorNameDir().'filemanager/src/resources/views/',
+            $this->configuration->getVendorNameDir() . 'filemanager/src/Resources/views/',
             ['target' => $target]
         ));
 
@@ -34,15 +34,56 @@ class IndexController extends AbstractController
             header('Content-type: application/json');
             echo json_encode(
                 [
-                    'name'  => '',
-                    'type'  => 'folder',
-                    'path'  => '',
+                    'name' => '',
+                    'type' => 'folder',
+                    'path' => '',
                     'items' => $this->scan($this->configuration->getUploadDir()),
                 ]
             );
         endif;
 
         $this->view->disable();
+    }
+
+    protected function scan(string $dir): array
+    {
+        $children = DirectoryUtil::getMixedList($dir);
+        $files = [];
+
+        foreach ($children as $filename => $fullPath) :
+            if (is_dir($fullPath)) :
+                $files[] = [
+                    'name' => $filename,
+                    'type' => 'folder',
+                    'path' => str_replace(
+                        $this->configuration->getWebDir() . 'uploads/' . $this->configuration->getAccount(),
+                        '',
+                        $fullPath
+                    ),
+                    'items' => $this->scan($fullPath),
+                    'hash' => md5($fullPath),
+                ];
+            else :
+                $files[] = [
+                    'name' => $filename,
+                    'type' => 'file',
+                    'path' => str_replace(
+                        $this->configuration->getWebDir() . 'uploads/' . $this->configuration->getAccount() . '/',
+                        '',
+                        $fullPath
+                    ),
+                    'thumbpath' => str_replace(
+                        $this->configuration->getWebDir() . 'uploads/',
+                        '',
+                        $fullPath
+                    ),
+                    'size' => FileUtil::getSize($fullPath),
+                    'hash' => md5($fullPath),
+                ];
+            endif;
+        endforeach;
+
+        return $files;
     }
 
     public function uploadAction(): void
@@ -55,7 +96,7 @@ class IndexController extends AbstractController
                 if (!empty($parent)) :
                     $parent .= '/';
                 endif;
-                if ($file->moveTo($this->configuration->getUploadDir().$parent.$name)) :
+                if ($file->moveTo($this->configuration->getUploadDir() . $parent . $name)) :
                     $this->flash->setSucces('ADMIN_FILE_UPLOAD_SUCCESS', [$file->getName()]);
                 else :
                     $this->flash->setError('ADMIN_FILE_UPLOAD_FAILED', [$file->getName()]);
@@ -63,47 +104,6 @@ class IndexController extends AbstractController
             endforeach;
         endif;
 
-        $this->redirect('/filemanager/index'.$returnPath);
-    }
-
-    protected function scan(string $dir): array
-    {
-        $children = DirectoryUtil::getMixedList($dir);
-        $files = [];
-
-        foreach ($children as $filename => $fullPath) :
-            if (is_dir($fullPath)) :
-                $files[] = [
-                    'name'  => $filename,
-                    'type'  => 'folder',
-                    'path'  => str_replace(
-                        $this->configuration->getWebDir().'uploads/'.$this->configuration->getAccount(),
-                        '',
-                        $fullPath
-                    ),
-                    'items' => $this->scan($fullPath),
-                    'hash'  => md5($fullPath),
-                ];
-            else :
-                $files[] = [
-                    'name'      => $filename,
-                    'type'      => 'file',
-                    'path'      => str_replace(
-                        $this->configuration->getWebDir().'uploads/'.$this->configuration->getAccount().'/',
-                        '',
-                        $fullPath
-                    ),
-                    'thumbpath' => str_replace(
-                        $this->configuration->getWebDir().'uploads/',
-                        '',
-                        $fullPath
-                    ),
-                    'size'      => FileUtil::getSize($fullPath),
-                    'hash'      => md5($fullPath),
-                ];
-            endif;
-        endforeach;
-
-        return $files;
+        $this->redirect('/filemanager/index' . $returnPath);
     }
 }
