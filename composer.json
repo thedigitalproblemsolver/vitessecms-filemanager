@@ -18,8 +18,8 @@
     }
   },
   "require": {
-    "vitessecms/media": "~0.0.8",
+    "vitessecms/media": "~0.1.0",
     "vitessecms/core": "~0.1.0",
-    "vitessecms/form": "~0.0.10"
+    "vitessecms/form": "~0.1.0"
   }
 }
