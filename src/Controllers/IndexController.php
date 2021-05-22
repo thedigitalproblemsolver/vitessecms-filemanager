@@ -12,7 +12,7 @@ class IndexController extends AbstractController
     public function indexAction(): void
     {
         $this->assets->load(AssetsEnum::FILEMANAGER);
-        $this->assets->load(AssetsEnum::LAZYLOAD);
+        $this->assets->loadLazyLoading();
 
         $target = '';
         if ($this->request->get('target')) :
