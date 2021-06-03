@@ -5,13 +5,12 @@ namespace VitesseCms\Filemanager\Controllers;
 use VitesseCms\Core\AbstractController;
 use VitesseCms\Core\Utils\DirectoryUtil;
 use VitesseCms\Core\Utils\FileUtil;
-use VitesseCms\Media\Enums\AssetsEnum;
 
 class IndexController extends AbstractController
 {
     public function indexAction(): void
     {
-        $this->assets->load(AssetsEnum::FILEMANAGER);
+        $this->assets->loadFileManager();
         $this->assets->loadLazyLoading();
 
         $target = '';
