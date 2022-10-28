@@ -18,7 +18,7 @@
     }
   },
   "require": {
-    "vitessecms/core": "~0.2.22",
+    "vitessecms/core": "~0.2.23",
     "vitessecms/form": "~0.2.8"
   }
 }
