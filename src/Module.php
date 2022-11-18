@@ -3,7 +3,7 @@
 namespace VitesseCms\Filemanager;
 
 use VitesseCms\Core\AbstractModule;
-use Phalcon\DiInterface;
+use Phalcon\Di\DiInterface;
 
 class Module extends AbstractModule
 {
