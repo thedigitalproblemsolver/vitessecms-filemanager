@@ -3,45 +3,50 @@
 namespace VitesseCms\Filemanager\Controllers;
 
 use VitesseCms\Core\AbstractController;
+use VitesseCms\Core\AbstractControllerFrontend;
 use VitesseCms\Core\Utils\DirectoryUtil;
 use VitesseCms\Core\Utils\FileUtil;
+use VitesseCms\Media\Enums\AssetsEnum;
+use VitesseCms\Media\Services\AssetsService;
 
-class IndexController extends AbstractController
+class IndexController extends AbstractControllerFrontend
 {
+    private AssetsService $assetsService;
+
+    public function OnConstruct()
+    {
+        parent::onConstruct();
+
+        $this->assetsService = $this->eventsManager->fire(AssetsEnum::ATTACH_SERVICE_LISTENER, new \stdClass());
+    }
+
     public function indexAction(): void
     {
-        $this->assets->loadFileManager();
-        $this->assets->loadLazyLoading();
+        $this->assetsService->loadFileManager();
+        $this->assetsService->loadLazyLoading();
 
         $target = '';
         if ($this->request->get('target')) :
             $target = str_replace('btn_', '', $this->request->get('target'));
         endif;
 
-        $this->view->set('content', $this->view->renderTemplate(
+        $this->viewService->set('content', $this->viewService->renderTemplate(
             'adminFilemanager',
-            $this->configuration->getVendorNameDir() . 'filemanager/src/Resources/views/',
+            $this->configService->getVendorNameDir() . 'filemanager/src/Resources/views/',
             ['target' => $target]
         ));
-
-        $this->prepareView();
     }
 
     public function scanAction(): void
     {
         if ($this->request->isAjax()) :
-            header('Content-type: application/json');
-            echo json_encode(
-                [
-                    'name' => '',
-                    'type' => 'folder',
-                    'path' => '',
-                    'items' => $this->scan($this->configuration->getUploadDir()),
-                ]
-            );
+            $this->jsonResponse([
+                'name' => '',
+                'type' => 'folder',
+                'path' => '',
+                'items' => $this->scan($this->configService->getUploadDir())
+            ]);
         endif;
-
-        $this->view->disable();
     }
 
     protected function scan(string $dir): array
@@ -55,7 +60,7 @@ class IndexController extends AbstractController
                     'name' => $filename,
                     'type' => 'folder',
                     'path' => str_replace(
-                        $this->configuration->getWebDir() . 'uploads/' . $this->configuration->getAccount(),
+                        $this->configService->getWebDir() . 'uploads/' . $this->configService->getAccount(),
                         '',
                         $fullPath
                     ),
@@ -67,12 +72,12 @@ class IndexController extends AbstractController
                     'name' => $filename,
                     'type' => 'file',
                     'path' => str_replace(
-                        $this->configuration->getWebDir() . 'uploads/' . $this->configuration->getAccount() . '/',
+                        $this->configService->getWebDir() . 'uploads/' . $this->configService->getAccount() . '/',
                         '',
                         $fullPath
                     ),
                     'thumbpath' => str_replace(
-                        $this->configuration->getWebDir() . 'uploads/',
+                        $this->configService->getWebDir() . 'uploads/',
                         '',
                         $fullPath
                     ),
@@ -95,10 +100,10 @@ class IndexController extends AbstractController
                 if (!empty($parent)) :
                     $parent .= '/';
                 endif;
-                if ($file->moveTo($this->configuration->getUploadDir() . $parent . $name)) :
-                    $this->flash->setSucces('ADMIN_FILE_UPLOAD_SUCCESS', [$file->getName()]);
+                if ($file->moveTo($this->configService->getUploadDir() . $parent . $name)) :
+                    $this->flashService->setSucces('ADMIN_FILE_UPLOAD_SUCCESS', [$file->getName()]);
                 else :
-                    $this->flash->setError('ADMIN_FILE_UPLOAD_FAILED', [$file->getName()]);
+                    $this->flashService->setError('ADMIN_FILE_UPLOAD_FAILED', [$file->getName()]);
                 endif;
             endforeach;
         endif;
