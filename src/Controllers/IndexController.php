@@ -2,7 +2,6 @@
 
 namespace VitesseCms\Filemanager\Controllers;
 
-use VitesseCms\Core\AbstractController;
 use VitesseCms\Core\AbstractControllerFrontend;
 use VitesseCms\Core\Utils\DirectoryUtil;
 use VitesseCms\Core\Utils\FileUtil;
@@ -33,7 +32,10 @@ class IndexController extends AbstractControllerFrontend
         $this->viewService->set('content', $this->viewService->renderTemplate(
             'adminFilemanager',
             $this->configService->getVendorNameDir() . 'filemanager/src/Resources/views/',
-            ['target' => $target]
+            [
+                'target' => $target,
+                'BASE_URI' => $this->configService->getBaseUri()
+            ]
         ));
     }
 
