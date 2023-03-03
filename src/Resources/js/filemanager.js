@@ -318,7 +318,7 @@ function uploadFile() {
                 processData: false,
                 contentType: false,
                 success: function (data) {
-                    var newLocation = "/filemanager/index?search=" + file.name;
+                    var newLocation = "/filemanager/index?embedded=1&search=" + file.name;
                     var targetElement = $('#filemanager-target');
                     if (targetElement.length) {
                         newLocation += "&target=" + targetElement.html();
