@@ -2,11 +2,11 @@
 
 namespace VitesseCms\Filemanager\Controllers;
 
+use Phalcon\Filter\Filter;
 use VitesseCms\Admin\AbstractAdminController;
 use VitesseCms\Database\AbstractCollection;
 use VitesseCms\Filemanager\Forms\AddDirectoryForm;
 use VitesseCms\Form\AbstractForm;
-use Phalcon\Filter;
 
 class AdmindirectoryController extends AbstractAdminController
 {
