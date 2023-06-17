@@ -10,15 +10,6 @@ use VitesseCms\Media\Services\AssetsService;
 
 class IndexController extends AbstractControllerFrontend
 {
-    private AssetsService $assetsService;
-
-    public function OnConstruct()
-    {
-        parent::onConstruct();
-
-        $this->assetsService = $this->eventsManager->fire(AssetsEnum::ATTACH_SERVICE_LISTENER, new \stdClass());
-    }
-
     public function indexAction(): void
     {
         $this->assetsService->loadFileManager();
@@ -34,7 +25,7 @@ class IndexController extends AbstractControllerFrontend
             $this->configService->getVendorNameDir() . 'filemanager/src/Resources/views/',
             [
                 'target' => $target,
-                'BASE_URI' => $this->configService->getBaseUri()
+                'BASE_URI' => $this->urlService->getBaseUri()
             ]
         ));
     }
