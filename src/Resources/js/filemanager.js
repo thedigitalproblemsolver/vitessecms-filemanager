@@ -232,9 +232,9 @@ $(function () {
                     var buttons = '<a ' +
                         'id="delete_hash_' + f.hash + '" ' +
                         'href="/admin/filemanager/adminfile/delete?file=' + fileBtoA + '" ' +
-                        'class="btn btn-outline-light fa fa-trash"' +
-                        '></a>' +
-                        '<a href="' + fileUrl + '" target="_blank" class="btn btn-outline fa fa-eye"></a>';
+                        'class="btn btn-outline-light"' +
+                        '><i class="fa fa-trash"></i></a>' +
+                        '<a href="' + fileUrl + '" target="_blank" class="btn btn-outline"><i class="fa fa-eye"></i></a>';
 
                     var fileType = fileType[fileType.length - 1];
                     var icon = '<span class="badge badge-info" style="height:120px">.' + fileType + '</span>';
@@ -242,11 +242,11 @@ $(function () {
                         icon = '<img class="lazy" alt="' + name + '" data-original="' + fileUrl + '?h=120" />';
                     }
                     if ($('#filemanager-target').length > 0) {
-                        buttons += '<a href="#" class="btn btn-outline fa fa-paper-plane" data-file="' + f.path + '"></a>';
+                        buttons += '<a href="#" class="btn btn-outline" data-file="' + f.path + '"><i class="fa fa-paper-plane"></i></a>';
                     }
 
                     var file = '<div id="hash_' + f.hash + '" class="card mb-4">' +
-                        '<div class="btn-group btn-group-sm">' +
+                        '<div class="btn-group btn-group-sm" style="height:auto !important;">' +
                         buttons +
                         '</div>' +
                         '<div class="text-center p-3">' + icon + '</div>' +
