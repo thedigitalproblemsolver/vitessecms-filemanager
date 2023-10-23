@@ -209,6 +209,10 @@ $(function () {
                     }
 
                     var newUrl = addParam('path', f.path, url);
+                    var targetElement = $('#filemanager-target');
+                    if (targetElement.length) {
+                        newUrl += "&target=" + targetElement.html();
+                    }
                     var folder = $('<div id="hash_' + f.hash + '" class="card text-center mb-4">' +
                         buttons +
                         '<a href="' + newUrl + '" title="' + f.path + '" class="fa fa-folder p-3"></a>' +
@@ -242,7 +246,7 @@ $(function () {
                         icon = '<img class="lazy" alt="' + name + '" data-original="' + fileUrl + '?h=120" />';
                     }
                     if ($('#filemanager-target').length > 0) {
-                        buttons += '<a href="#" class="btn btn-outline" data-file="' + f.path + '"><i class="fa fa-paper-plane"></i></a>';
+                        buttons += '<a href="#" class="btn btn-outline select-button" data-file="' + f.path + '"><i class="fa fa-paper-plane"></i></a>';
                     }
 
                     var file = '<div id="hash_' + f.hash + '" class="card mb-4">' +
@@ -281,7 +285,7 @@ $(function () {
             });
             breadcrumbs.text('').append(breadcrumb);
 
-            $('.fa-paper-plane').on('click', function (e) {
+            $('.select-button').on('click', function (e) {
                 e.preventDefault();
                 $('#' + $('#filemanager-target').html(), window.parent.document).val($(this).data('file'));
                 $('#container-filemanager', window.parent.document).slideUp();
