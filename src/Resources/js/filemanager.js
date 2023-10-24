@@ -213,13 +213,13 @@ $(function () {
                     if (targetElement.length) {
                         newUrl += "&target=" + targetElement.html();
                     }
-                    var folder = $('<div id="hash_' + f.hash + '" class="card text-center mb-4">' +
+                    var folder = $('<div id="hash_' + f.hash + '" class="text-center col-2"><div class="card">' +
                         buttons +
                         '<a href="' + newUrl + '" title="' + f.path + '" class="fa fa-folder p-3"></a>' +
                         '<div class="card-footer">' +
                         '<small>' + name + '</small>' +
                         '</div>' +
-                        '</div>');
+                        '</div></div>');
                     folder.appendTo(fileList);
                 });
             }
@@ -249,7 +249,7 @@ $(function () {
                         buttons += '<a href="#" class="btn btn-outline select-button" data-file="' + f.path + '"><i class="fa fa-paper-plane"></i></a>';
                     }
 
-                    var file = '<div id="hash_' + f.hash + '" class="card mb-4">' +
+                    var file = '<div id="hash_' + f.hash + '" class="col-2"><div class="card"> ' +
                         '<div class="btn-group btn-group-sm" style="height:auto !important;">' +
                         buttons +
                         '</div>' +
@@ -257,7 +257,7 @@ $(function () {
                         '<div class="card-footer">' +
                         '<small>' + name + '</small>' +
                         '</div>' +
-                        '</div>';
+                        '</div></div>';
                     $(file).appendTo(fileList);
                 });
 
